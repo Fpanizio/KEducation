@@ -3,7 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const addTaskBtn = document.getElementById("addTaskBtn");
   const taskList = document.getElementById("taskList");
 
-  let tasks = [];
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+  function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 
   function renderTasks() {
     taskList.innerHTML = "";
@@ -17,7 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   function addTask() {
     const text = taskInput.value.trim();
     if (text) {
-      tasks.push({ text });
+      tasks.push({ text, completed: false });
+      saveTasks();
       taskInput.value = "";
       renderTasks();
     }
@@ -27,4 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
   taskInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") addTask();
   });
+
+  renderTasks();
 });
