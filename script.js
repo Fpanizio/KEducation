@@ -95,11 +95,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function addTask() {
     const text = taskInput.value.trim();
+    const taskMessage = document.getElementById("taskMessage");
+
     if (text) {
       tasks.push({ text, completed: false });
       saveTasks();
       taskInput.value = "";
+      taskMessage.style.display = "none";
       renderTasks();
+    } else {
+      taskMessage.style.display = "block";
     }
   }
 
